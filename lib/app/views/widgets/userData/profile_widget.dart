@@ -1,5 +1,7 @@
 // ignore_for_file: unused_field, unnecessary_null_comparison
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/home_page.dart';
 
@@ -12,6 +14,9 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController telefoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             SizedBox(width: 2), 
                             IconButton(
                               icon: Icon(Icons.edit, color: primary.withOpacity(0.7)),
-                              onPressed: () {}
+                              onPressed: () {
+                                _showEditDialog("Nome", nomeController, widget.userData['nome']!);
+                              }
                             ),                        
                           ],
                         ),                       
@@ -122,7 +129,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             SizedBox(width: 2), 
                             IconButton(
                               icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
-                              onPressed: () {}
+                              onPressed: () {
+                                _showEditDialog("Telefone", nomeController, widget.userData['telefone']!);
+                              }
                             )                          
                           ],
                         ),
@@ -149,7 +158,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             SizedBox(width: 2), 
                             IconButton(
                               icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
-                              onPressed: () {}
+                              onPressed: () {
+                                _showEditDialog("Email", nomeController, widget.userData['email']!);
+                              }
                             )  
                           ],
                         ),
@@ -174,7 +185,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 ),
                               );
                             },
-                          transitionDuration: Duration(milliseconds: 900),  
+                          transitionDuration: Duration(milliseconds: 500),  
                           ),
                           (route) => false,
                         );
@@ -183,33 +194,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           'Voltar',
                           style: TextStyle(
                             color: primary,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 45,
-                        margin: EdgeInsets.symmetric(horizontal: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(primary),
-                          ),
-                          onPressed: (){},              
-                          child: Text(
-                            "Actualizar dados",
-                            style: TextStyle(
-                              fontSize: 15, 
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500
-                            ),
                           ),
                         ),
                       ),                     
@@ -223,4 +207,55 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       )
     );
   }
+
+  Future<void> _showEditDialog(String fieldName, TextEditingController controller, String currentValue) async {
+    setState(() {
+      
+    });
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Editar $fieldName"),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(hintText: fieldName.toLowerCase()),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await _updateFirestoreField(fieldName, controller.text);
+              Navigator.of(context).pop();
+              setState(() {
+                widget.userData[fieldName.toLowerCase()] = controller.text;
+              });
+            },
+            child: Text('Guardar'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+  Future<void> _updateFirestoreField(String fieldName, String newValue) async {
+    User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+            .collection('usuario')
+            .doc(user.uid)
+            .get();
+    
+      await FirebaseFirestore.instance.collection('usuario').doc(userSnapshot.id).update({
+        fieldName.toLowerCase(): newValue,
+      });
+    }
+  }
+
 }

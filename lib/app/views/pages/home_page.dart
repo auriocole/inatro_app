@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 },
-              transitionDuration: Duration(milliseconds: 900),  
+              transitionDuration: Duration(milliseconds: 500),  
               ),
               (route) => false,
               );
