@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/features/auth/login.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
+import 'package:inatro_app/app/views/pages/home_page.dart';
 import 'package:inatro_app/app/views/pages/signup_page.dart';
 import 'package:inatro_app/app/views/widgets/form/form_container_widget.dart';
 
@@ -137,6 +138,18 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: primary, fontWeight: FontWeight.w500),
                       ),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => HomePage(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+                      }, 
+                      child: Text("Home", style: TextStyle(color: Colors.red)),
+                    )  
                   ],
                 ),
               ],

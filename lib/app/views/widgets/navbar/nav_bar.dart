@@ -29,7 +29,7 @@ class _NavBarState extends State<NavBar> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 10,),
-                Icon(Icons.account_circle),
+                Icon(Icons.account_circle, color: secondary.shade600,),
                 Text(
                   '${widget.userData['nome']}',
                   style: TextStyle(

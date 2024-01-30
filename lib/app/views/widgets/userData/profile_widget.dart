@@ -69,10 +69,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               ),
-                            ),                         
+                            ),
+                            SizedBox(width: 2), 
+                            IconButton(
+                              icon: Icon(Icons.edit, color: primary.withOpacity(0.7)),
+                              onPressed: () {}
+                            ),                        
                           ],
                         ),                       
-                        SizedBox(height: 5),
+                        SizedBox(height: 3),
                         Row(
                           children: [
                             Text(
@@ -113,10 +118,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               ),
-                            ),                          
+                            ),
+                            SizedBox(width: 2), 
+                            IconButton(
+                              icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
+                              onPressed: () {}
+                            )                          
                           ],
                         ),
-                        SizedBox(height: 5),
+                        SizedBox(height: 3),
                         Row(
                           children: [
                             Text(
@@ -135,7 +145,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               ),
-                            ),  
+                            ),
+                            SizedBox(width: 2), 
+                            IconButton(
+                              icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
+                              onPressed: () {}
+                            )  
                           ],
                         ),
                       TextButton(

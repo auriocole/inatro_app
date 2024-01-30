@@ -37,7 +37,7 @@ class _VeiculoDetailsWidgetState extends State<VeiculoDetailsWidget> {
                     height: 100,
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: 1),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.all(30),
