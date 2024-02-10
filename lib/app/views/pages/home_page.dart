@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inatro_app/app/features/user_data/user_data.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/login_page.dart';
-import 'package:inatro_app/app/views/pages/landing_page.dart';
+import 'package:inatro_app/app/views/widgets/landing/landing_page.dart';
 import 'package:inatro_app/app/views/widgets/payment/metodo_pagamento_widget.dart';
 import 'package:inatro_app/app/views/widgets/navbar/nav_bar.dart';
 import 'package:inatro_app/app/views/widgets/userData/profile_widget.dart';

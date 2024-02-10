@@ -209,40 +209,43 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   }
 
   Future<void> _showEditDialog(String fieldName, TextEditingController controller, String currentValue) async {
-    setState(() {
-      
-    });
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text("Editar $fieldName"),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: fieldName.toLowerCase()),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Cancelar'),
+    controller.text = currentValue;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            "Editar $fieldName",
+            style: TextStyle(
+              fontSize: 16
+            ),
+            ),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: controller.text),
           ),
-          TextButton(
-            onPressed: () async {
-              await _updateFirestoreField(fieldName, controller.text);
-              Navigator.of(context).pop();
-              setState(() {
-                widget.userData[fieldName.toLowerCase()] = controller.text;
-              });
-            },
-            child: Text('Guardar'),
-          ),
-        ],
-      );
-    },
-  );
-}
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _updateFirestoreField(fieldName, controller.text);
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.userData[fieldName.toLowerCase()] = controller.text;
+                });
+              },
+              child: Text('Guardar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<void> _updateFirestoreField(String fieldName, String newValue) async {
     User? user = FirebaseAuth.instance.currentUser;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/home_page.dart';
 import 'package:inatro_app/app/views/widgets/payment/metodo_pagamento_widget.dart';
+import 'package:inatro_app/app/views/widgets/userData/historical_widget.dart';
 
 class NavBar extends StatefulWidget {
   final Map<String, String> userData;
@@ -13,6 +14,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> { 
+  
   @override
   void dispose() {
     super.dispose();
@@ -92,7 +94,32 @@ class _NavBarState extends State<NavBar> {
             minLeadingWidth: 10,
             leading: Icon(Icons.history_outlined, color: Color(0xFF2F2E3B)),
             title: const Text('Ver Histórico', style: TextStyle(fontSize: 16),),
-            onTap: () {},
+            onTap: () {
+              Future.delayed(Duration(seconds: 1));
+              Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => HistoricalWidget(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(0.0, 0.0);
+                  const end = Offset.zero;
+                  var tween = Tween(begin: begin, end: end);
+                  var offsetAnimation = animation.drive(tween);
+                  var fadeTween = Tween(begin: 0.0, end: 1.0);
+                  var fadeAnimation = animation.drive(fadeTween);
+                  return FadeTransition(
+                    opacity: fadeAnimation,
+                    child: SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    ),
+                  );
+                },
+              transitionDuration: Duration(milliseconds: 900),  
+              ),
+              (route) => false,
+            );
+            },
           ),
           ListTile(
             minLeadingWidth: 10,
