@@ -95,13 +95,12 @@ class _NavBarState extends State<NavBar> {
             leading: Icon(Icons.history_outlined, color: Color(0xFF2F2E3B)),
             title: const Text('Ver Histórico', style: TextStyle(fontSize: 16),),
             onTap: () {
-              Future.delayed(Duration(seconds: 1));
               Navigator.pushAndRemoveUntil(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => HistoricalWidget(),
+                context,
+                PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => Historical_Widget(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(0.0, 0.0);
+                  const begin = Offset(-1.0, 0.0);
                   const end = Offset.zero;
                   var tween = Tween(begin: begin, end: end);
                   var offsetAnimation = animation.drive(tween);
@@ -118,7 +117,7 @@ class _NavBarState extends State<NavBar> {
               transitionDuration: Duration(milliseconds: 900),  
               ),
               (route) => false,
-            );
+              );
             },
           ),
           ListTile(

@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:inatro_app/app/features/update_userData/update_useData.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/home_page.dart';
 
@@ -155,13 +156,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(width: 2), 
-                            IconButton(
-                              icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
-                              onPressed: () {
-                                _showEditDialog("Email", nomeController, widget.userData['email']!);
-                              }
-                            )  
+                            SizedBox(width: 2),  
                           ],
                         ),
                       TextButton(
@@ -171,7 +166,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           PageRouteBuilder(
                             pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(-1.0, 0.0);
+                              const begin = Offset(1.0, 0.0);
                               const end = Offset.zero;
                               var tween = Tween(begin: begin, end: end);
                               var offsetAnimation = animation.drive(tween);
@@ -214,6 +209,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           title: Text(
             "Editar $fieldName",
             style: TextStyle(
@@ -223,42 +219,42 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           content: TextField(
             controller: controller,
             decoration: InputDecoration(hintText: controller.text),
+            cursorColor: primary,
+            style: TextStyle(
+              color: secondary,
+              fontSize: 14.5,
+              ),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancelar'),
+              child: Text(
+                'Cancelar',
+                style: TextStyle(
+                  color: primary
+                  ),
+                ),
             ),
             TextButton(
-              onPressed: () async {
-                await _updateFirestoreField(fieldName, controller.text);
+              onPressed: () {
+                update_userData.updateUserData(fieldName, controller.text);
                 Navigator.of(context).pop();
                 setState(() {
                   widget.userData[fieldName.toLowerCase()] = controller.text;
                 });
               },
-              child: Text('Guardar'),
+              child: Text(
+                'Guardar',
+                style: TextStyle(
+                  color: primary
+                  ),
+                ),
             ),
           ],
         );
       },
     );
   }
-
-  Future<void> _updateFirestoreField(String fieldName, String newValue) async {
-    User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-            .collection('usuario')
-            .doc(user.uid)
-            .get();
-    
-      await FirebaseFirestore.instance.collection('usuario').doc(userSnapshot.id).update({
-        fieldName.toLowerCase(): newValue,
-      });
-    }
-  }
-
 }
