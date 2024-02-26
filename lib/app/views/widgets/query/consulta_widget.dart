@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/widgets/form/form_container_widget.dart';
-import 'package:inatro_app/app/views/widgets/query/consulta_resultado_widget.dart';
+import 'package:inatro_app/app/views/widgets/query/consulta_resultado_page.dart';
 
 class ConsultaWidget extends StatefulWidget {
   const ConsultaWidget({super.key});

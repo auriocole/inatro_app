@@ -31,16 +31,20 @@ class Historical_Widget extends StatelessWidget {
           return ListView.builder(
             itemCount: docs?.length,
             itemBuilder: (context, index) {
-              // Verificando se o uid corresponde ao id-utilizador
-              if (docs?[index].data()['UID_consulta'] == 'mPNZ3lbgfaZuGfjQtSXLZnHtmeJ2') {
+              if (docs?[index].data()['UID_consulta'] == 'NMPaZU3Pn9fDuJiRtNNkaMK2AwE3') {
                 return Container(
+                  margin: EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: secondary.shade100.withOpacity(0.1),
-                        width: 1.5
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: secondary.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 8,
+                        offset: Offset(0, 3),
                       ),
-                    )
+                    ],
                   ),
                   child: ListTile(
                     title: Text(docs?[index].data()['Matricula']),

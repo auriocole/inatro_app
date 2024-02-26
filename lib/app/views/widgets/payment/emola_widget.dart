@@ -133,7 +133,7 @@ class _PagamentoEmolaWidgetState extends State<PagamentoEmolaWidget> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation, secondaryAnimation) => ConsultaWidget(),
                                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                    const begin = Offset(-1.0, 0.0);
+                                    const begin = Offset(0.0, 0.0);
                                     const end = Offset.zero;
                                     var tween = Tween(begin: begin, end: end);
                                     var offsetAnimation = animation.drive(tween);
