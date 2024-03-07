@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
+import 'package:inatro_app/app/views/widgets/landing/dialogs/queryInfo_dialog.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -41,7 +43,7 @@ class LandingPage extends StatelessWidget {
                 SizedBox(height: 5),
                 TextButton(
                   onPressed: () {
-                    // Ação do botão "Ver Mais"
+                    QueryInfoDialog.showQueryInfoDialog(context);
                   },
                   child: Text(
                     'Ver Mais',
@@ -85,7 +87,6 @@ class LandingPage extends StatelessWidget {
                 SizedBox(height: 5),
                 TextButton(
                   onPressed: () {
-                    // Ação do botão "Ver Mais"
                   },
                   child: Text(
                     'Ver Mais',
