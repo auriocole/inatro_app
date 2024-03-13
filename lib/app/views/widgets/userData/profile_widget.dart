@@ -1,8 +1,6 @@
 // ignore_for_file: unused_field, unnecessary_null_comparison
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:inatro_app/app/features/update_userData/update_useData.dart';
+import 'package:inatro_app/app/services/update_userData/update_useData.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/home_page.dart';
 
@@ -38,9 +36,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: secondary.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 4,
+                        color: secondary.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 8,
                         offset: Offset(0, 3),
                       ),
                     ],
@@ -159,6 +157,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             SizedBox(width: 2),  
                           ],
                         ),
+                      SizedBox(height: 5),
                       TextButton(
                         onPressed: () async {
                           Navigator.pushAndRemoveUntil(

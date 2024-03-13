@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_field
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inatro_app/app/features/user_data/user_data.dart';
+import 'package:inatro_app/app/services/user_data/user_data.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/login_page.dart';
 import 'package:inatro_app/app/views/widgets/landing/landing_page.dart';
@@ -39,7 +39,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        forceMaterialTransparency: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        
         foregroundColor: secondary,
         actions: <Widget> [
           IconButton(

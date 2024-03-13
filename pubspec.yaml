@@ -73,6 +73,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - lib/app/assets/bg_3.png
     - lib/app/assets/foto.jpg
     - lib/app/assets/logo.png
     - lib/app/assets/carousel/image_1.jpg
@@ -87,6 +88,7 @@ flutter:
     - lib/app/assets/bg_pexels.jpg
     - lib/app/assets/mpesa-logo.png
     - lib/app/assets/emola-logo.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

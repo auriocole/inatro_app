@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 import 'package:inatro_app/app/views/pages/home_page.dart';
+//import 'package:inatro_app/app/views/widgets/Historical/historical.dart';
 import 'package:inatro_app/app/views/widgets/payment/metodo_pagamento_widget.dart';
 import 'package:inatro_app/app/views/widgets/userData/historical_widget.dart';
 
@@ -23,7 +24,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 250,
+      width: 220,
       child: ListView(          
         children: [
           Container(

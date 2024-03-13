@@ -63,8 +63,8 @@ class FormasDePagamentoWidget extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: secondary.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 4,
+                              spreadRadius: 1,
+                              blurRadius: 8,
                               offset: Offset(0, 3),
                             ),
                           ],
@@ -88,8 +88,8 @@ class FormasDePagamentoWidget extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: secondary.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 4,
+                              spreadRadius: 1,
+                              blurRadius: 8,
                               offset: Offset(0, 3),
                             ),
                           ],
@@ -116,10 +116,10 @@ class FormasDePagamentoWidget extends StatelessWidget {
                       ),
                       TextSpan(
                         text: "termo de uso",
-                        style: TextStyle(
-                          color: primary,
-                          decoration: TextDecoration.underline,
-                        ),
+                          style: TextStyle(
+                            color: primary,
+                            decoration: TextDecoration.underline,
+                          ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             

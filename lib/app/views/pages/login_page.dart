@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, use_build_context_synchronously, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:inatro_app/app/features/auth/login.dart';
+import 'package:inatro_app/app/services/auth/login.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
 //import 'package:inatro_app/app/views/pages/home_page.dart';
 import 'package:inatro_app/app/views/pages/signup_page.dart';
@@ -137,21 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("Criar Conta",
                       style: TextStyle(color: primary, fontWeight: FontWeight.w500),
                       ),
-                    ),
-                    /*
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage(),
-                          ),
-                          (Route<dynamic> route) => false,
-                        );
-                      }, 
-                      child: Text("Home", style: TextStyle(color: Colors.red)),
-                    )
-                    */  
+                    ), 
                   ],
                 ),
               ],
@@ -159,6 +145,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );//Scaffold
+    );
   }
 }

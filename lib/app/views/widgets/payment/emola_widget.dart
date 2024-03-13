@@ -89,7 +89,7 @@ class _PagamentoEmolaWidgetState extends State<PagamentoEmolaWidget> {
                         BoxShadow(
                           color: secondary.withOpacity(0.1),
                           spreadRadius: 1,
-                          blurRadius: 4,
+                          blurRadius: 8,
                           offset: Offset(0, 1),
                         ),
                       ],

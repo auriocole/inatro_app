@@ -91,7 +91,7 @@ class _PagamentoMpesaWidgetState extends State<PagamentoMpesaWidget> {
                             BoxShadow(
                               color: secondary.withOpacity(0.1),
                               spreadRadius: 1,
-                              blurRadius: 4,
+                              blurRadius: 8,
                               offset: Offset(0, 1),
                             ),
                           ],
