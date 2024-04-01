@@ -1,8 +1,7 @@
-// ignore_for_file: unused_field, unnecessary_null_comparison
+// ignore_for_file: unused_field, unnecessary_null_comparison, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_const_constructors, avoid_unnecessary_containers
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/services/update_userData/update_useData.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
-import 'package:inatro_app/app/views/pages/home_page.dart';
 
 class ProfileWidget extends StatefulWidget {
   final Map<String, String> userData;
@@ -20,13 +19,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold( 
+      appBar: AppBar(
+        title: Text(
+          'Dados do Utilizador',
+          style: TextStyle(
+            color: secondary.shade600,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 5,),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.all(30),
@@ -45,16 +53,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                   child: Column(
                     children: [                 
-                      SizedBox(height: 5),
-                      Text(
-                        'Dados do Utilizador',
-                        style: TextStyle(
-                          color: secondary.shade400,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      SizedBox(height: 10),  
+                      SizedBox(height: 2),  
                         Row(
                           children: [
                             Text(
@@ -157,40 +156,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             SizedBox(width: 2),  
                           ],
                         ),
-                      SizedBox(height: 5),
-                      TextButton(
-                        onPressed: () async {
-                          Navigator.pushAndRemoveUntil(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(1.0, 0.0);
-                              const end = Offset.zero;
-                              var tween = Tween(begin: begin, end: end);
-                              var offsetAnimation = animation.drive(tween);
-                              var fadeTween = Tween(begin: 0.0, end: 1.0);
-                              var fadeAnimation = animation.drive(fadeTween);
-                              return FadeTransition(
-                                opacity: fadeAnimation,
-                                child: SlideTransition(
-                                  position: offsetAnimation,
-                                  child: child,
-                                ),
-                              );
-                            },
-                          transitionDuration: Duration(milliseconds: 500),  
-                          ),
-                          (route) => false,
-                        );
-                        },
-                        child: Text(
-                          'Voltar',
-                          style: TextStyle(
-                            color: primary,
-                          ),
-                        ),
-                      ),                     
+                      SizedBox(height: 5),                     
                     ],
                   ),
                 ),              

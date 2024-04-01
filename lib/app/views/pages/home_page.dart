@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_field
+// ignore_for_file: prefer_const_constructors, unused_field, use_key_in_widget_constructors, use_build_context_synchronously, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/services/user_data/user_data.dart';
@@ -39,36 +39,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        
         foregroundColor: secondary,
         actions: <Widget> [
           IconButton(
             icon: const Icon(Icons.person_2_outlined),
             onPressed: () async { 
-              Navigator.pushAndRemoveUntil(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => ProfileWidget(userData: _userData),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(-1.0, 0.0);
-                  const end = Offset.zero;
-                  var tween = Tween(begin: begin, end: end);
-                  var offsetAnimation = animation.drive(tween);
-                  var fadeTween = Tween(begin: 0.0, end: 1.0);
-                  var fadeAnimation = animation.drive(fadeTween);
-                  return FadeTransition(
-                    opacity: fadeAnimation,
-                    child: SlideTransition(
-                      position: offsetAnimation,
-                      child: child,
-                    ),
-                  );
-                },
-              transitionDuration: Duration(milliseconds: 500),  
-              ),
-              (route) => false,
+                  pageBuilder: (context, animation, secondaryAnimation) => ProfileWidget(userData: _userData),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    var tween = Tween(begin: begin, end: end);
+                    var offsetAnimation = animation.drive(tween);
+                    var fadeTween = Tween(begin: 0.0, end: 1.0);
+                    var fadeAnimation = animation.drive(fadeTween);
+                    return FadeTransition(
+                      opacity: fadeAnimation,
+                      child: SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  transitionDuration: Duration(milliseconds: 500),  
+                ),
               );
             },
           ),

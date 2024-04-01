@@ -1,8 +1,9 @@
+// ignore_for_file: use_key_in_widget_constructors, camel_case_types, prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inatro_app/app/views/colors/colors.dart';
-import 'package:inatro_app/app/views/pages/home_page.dart';
 
 class Historical_Widget extends StatefulWidget {
   @override
@@ -14,14 +15,12 @@ class _Historical_WidgetState extends State<Historical_Widget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Histórico',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
+        title: Text(
+          'Histórico',
+          style: TextStyle(
+            color: secondary.shade600,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
       ),
@@ -74,39 +73,6 @@ class _Historical_WidgetState extends State<Historical_Widget> {
                   },
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Future.delayed(Duration(seconds: 1));
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        const begin = Offset(1.0, 0.0);
-                        const end = Offset.zero;
-                        var tween = Tween(begin: begin, end: end);
-                        var offsetAnimation = animation.drive(tween);
-                        var fadeTween = Tween(begin: 0.0, end: 1.0);
-                        var fadeAnimation = animation.drive(fadeTween);
-                        return FadeTransition(
-                          opacity: fadeAnimation,
-                          child: SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          ),
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 900),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: Text(
-                  "Voltar",
-                  style: TextStyle(color: primary)
-                  ),
-              ),
-              SizedBox(height: 20)
             ],
           );
         },
