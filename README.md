@@ -1,12 +1,16 @@
-# inatro_usecase_app
-## Aplicativo para consultas de matriculas de veiculas
+# Inatro_usecase_app
+Aplicativo para consultas de matriculas de veiculos
 
 ## O techs usadas:
-### Flutter e Dart
-- 
+### Flutter
+### Dart
 ### Firebase
 - Authentication
 - Cloud Firestore
-
-## Getting Started
-# inatro_app# inatro_app
+## Features:
+- Login
+- Cadastro
+- Atualizar Dados do utilizador
+- Fazer Pagamento(feature ainda em manutenção)
+- Fazer consulta de matriculas de veiculos
+# Screenshots
