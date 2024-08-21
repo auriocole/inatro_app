@@ -1,18 +1,19 @@
-# inatro_app
+# Inatro_usecase_app
+Aplicativo para consultas de matriculas de veiculos
 
-A new Flutter project.
+## As tecnologias usadas:
+### Flutter
+### Dart
+### Firebase
+- Authentication
+- Cloud Firestore
 
-## Getting Started
+## Features:
+- Login
+- Cadastro
+- Atualizar Dados do utilizador
+- Fazer Pagamento (feature ainda em manutenção)
+- Fazer consulta de matriculas de veiculos
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# inatro_app
-# inatro_app
+## Screenshots
+soon
