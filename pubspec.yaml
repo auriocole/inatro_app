@@ -39,8 +39,8 @@ dependencies:
   cloud_firestore: ^4.13.1
   firebase_auth: ^4.14.0
   firebase_storage: ^11.5.1
-  font_awesome_flutter: ^10.6.0
-  page_transition: "^2.1.0"
+  font_awesome_flutter: ^10.7.0
+  get: ^4.6.6
   
 
 dev_dependencies:
@@ -89,6 +89,7 @@ flutter:
     - lib/app/assets/bg_pexels.jpg
     - lib/app/assets/mpesa-logo.png
     - lib/app/assets/emola-logo.png
+    - lib/app/assets/user-placeholder.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
