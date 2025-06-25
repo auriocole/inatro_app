@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inatro_app/app/views/colors/Colors.dart';
 import 'package:inatro_app/app/views/pages/HomePage.dart';
 
 class LoginService {
@@ -12,16 +13,8 @@ class LoginService {
       String identity = identityController.text;
       String password = passwordController.text;
 
-      if (identity.isEmpty || password.isEmpty) {
-        Get.snackbar("Preencha todos os campos.", "") ;
-      }
-
-      if (!RegExp(r'^\d{12}[A-Z]$').hasMatch(identity)) {
-        Get.snackbar("Número de BI inválido.", "");
-      }
-
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('usuário')
+          .collection('usuario')
           .where('identidade', isEqualTo: identity)
           .get();
 
@@ -30,15 +23,132 @@ class LoginService {
           email: querySnapshot.docs.first['email'],
           password: password,
         );
-        Get.snackbar("Usuário autenticado com sucesso!", "");
-        //print("Usuário autenticado com sucesso");
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Credencias corretas!",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Seja bem vindo(a).",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.check_box, color: Colors.white),
+          //backgroundColor: primary.shade400,
+        );
+        setLoading(false);
         Get.offAll(() => const HomePage());
       } else {
-        Get.snackbar("Usuário não encontrado!", "");
-        //print('Usuário não encontrado.');
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Credenciais não conferem!",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Tente novamente.",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.error, color: Colors.white),
+          backgroundColor: Colors.red.shade400,
+        );
         setLoading(false);
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        // Credenciais inválidas
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Credenciais não conferem!",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Tente novamente.",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.error, color: Colors.white),
+          backgroundColor: Colors.red.shade400,
+        );
+        setLoading(false);
+        print("Erro durante o login: $e");
+      } if (e.code == 'network-request-failed') {
+        // Credenciais inválidas
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Sem internet!",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Tente novamente.",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.network_check, color: Colors.white),
+          backgroundColor: Colors.red.shade400,
+        );
+        setLoading(false);
+        print("Erro durante o login: $e");
+      }
     } catch (e) {
+      Get.snackbar(
+        "",
+        "",
+        titleText: const Text(
+          "Erro de autenticação!",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        messageText: const Text(
+          "Algo deu errado, Tente novamente.",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
+            color: Colors.white,
+          ),
+        ),
+        icon: const Icon(Icons.error, color: Colors.white),
+        backgroundColor: Colors.red.shade400,
+      );
       print("Erro durante o login: $e");
       setLoading(false);
     }

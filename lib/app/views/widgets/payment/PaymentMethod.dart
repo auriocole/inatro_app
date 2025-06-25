@@ -5,20 +5,20 @@ import 'package:inatro_app/app/views/widgets/payment/EmolaPaymentMethod.dart';
 import 'package:inatro_app/app/views/widgets/payment/MpesaPaymentMethod.dart';
 
 class PaymentMethod {
-  static void showPaymentMethod(BuildContext context) {
+  static void showPaymentMethod(BuildContext context, String plate) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return const PaymentMethodWidget();
+        return PaymentMethodWidget(plate: plate);
       },
     );
   }
 }
 
 class PaymentMethodWidget extends StatelessWidget {
-  const PaymentMethodWidget({super.key});
+  final String plate;
+  const PaymentMethodWidget({super.key, required this.plate});
 
-  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +52,7 @@ class PaymentMethodWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        MpesaPaymentMethod.showMpesaPaymentMethod(context);
+                        MpesaPaymentMethod.showMpesaPaymentMethod(context, plate);
                         },
                       child: Container(
                         height: 120,
@@ -77,7 +77,7 @@ class PaymentMethodWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        EmolaPaymentMethod.showEmolaPaymentMethod(context);
+                        EmolaPaymentMethod.showEmolaPaymentMethod(context, plate);
                       },
                       child: Container(
                         height: 120,

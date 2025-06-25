@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inatro_app/app/views/colors/Colors.dart';
 import 'package:inatro_app/app/views/pages/HomePage.dart';
 import 'package:inatro_app/app/views/widgets/form/FormContainerWidget.dart';
+import 'package:inatro_app/app/views/widgets/payment/PaymentMethod.dart';
 import 'package:inatro_app/app/views/widgets/query/VehicleDetailsWidget.dart';
 
 class Querywidget extends StatefulWidget {
@@ -42,7 +44,8 @@ class _QuerywidgetState extends State<Querywidget> {
           ),
         ),
       ),
-      body: SafeArea(
+      body: _isLoading ? const Center(child: CircularProgressIndicator(backgroundColor: Colors.white, color: primary,)) :
+      SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -120,7 +123,20 @@ class _QuerywidgetState extends State<Querywidget> {
                               ),
                               backgroundColor: WidgetStateProperty.all(primary),
                             ),
-                            onPressed: _isLoading ? null : makeQuery,     
+                            onPressed: () {
+                              String plate = plateController.text;
+
+                              if (plate.isEmpty) {
+                                Get.snackbar("Preencha o campo", "");
+                                throw "Preencha o campo";
+                              }
+                              else if (!RegExp(r'^[AM][A-Z]{2}-\d{3}-[A-Z]{2}$').hasMatch(plate)) {
+                                Get.snackbar("Formato inválido", "");
+                                throw "Formato inválido";
+                              } else {
+                                PaymentMethod.showPaymentMethod(context, plate);
+                              }
+                            },
                             child: _isLoading ? const CircularProgressIndicator(backgroundColor: Colors.white, color: primary,)
                             : const Text(
                               "Consultar",
@@ -147,13 +163,13 @@ class _QuerywidgetState extends State<Querywidget> {
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
                               ),
-                              backgroundColor: WidgetStateProperty.all(Colors.red),
+                              backgroundColor: WidgetStateProperty.all(Colors.red.withOpacity(0.9)),
                             ),
                             onPressed: () {
                               Get.offAll(() => const HomePage());
                             },     
                             child: const Text(
-                              "Cancelar Consultar",
+                              "Cancelar",
                               style: TextStyle(
                                 fontSize: 16, 
                                 color: Colors.white,
@@ -246,15 +262,30 @@ class _QuerywidgetState extends State<Querywidget> {
         Map<String, dynamic> vehicleData = documentSnapshot.docs[0].data();
         await Future.delayed(const Duration(seconds: 2));
         Get.snackbar("Veiculo encontrado com sucesso", "");
-        Get.offAll(() => VehicleDetailsWidget(vehicleData: vehicleData));
-        print("Veiculo encontrado com sucesso");
+
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+              .collection('usuario')
+              .doc(user.uid)
+              .get();
+
+          String userUID = userSnapshot.data().toString();
+          print(userUID);
+          await FirebaseFirestore.instance.collection('consulta').add({
+            "Data": DateTime.now().toString().replaceAll("T", " "),
+            "Matricula": plate,
+            "UID_consulta": userUID,
+          });
+        }
+
+        Get.offAll(() => VehicleDetailsWidget(vehicleData: vehicleData, plate: plate));
         setState(() {
           _isLoading = false;
         });
         
       } else {
-        Get.snackbar("Dados não encontrados!", "");
-        print('Dados não encontrados!');
+        Get.snackbar("Matrícula não encontrada!", "");
         setState(() {
           _isLoading = false;
         });

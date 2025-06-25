@@ -12,9 +12,7 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController telefoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +51,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   children: <Widget> [
                     const Image(
                       image: AssetImage('lib/app/assets/user-placeholder.png'),
-                      width: 150,
-                      height: 150
+                      width: 140,
+                      height: 140
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +64,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             fontWeight: FontWeight.w700,)
                             ),
                             onPressed: () {
-                              _showEditDialog("Nome", nomeController, widget.userData['nome']!);
+                              _showEditDialog("Nome", nameController, widget.userData['nome']!);
                             },
                           ),                        
                         ],
@@ -80,8 +78,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [                                                              
                       const SizedBox(height: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
                           Text(
                             'BI: ',
@@ -102,8 +99,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           ),                          
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
                           Text(
                             'Telefone: ',
@@ -113,27 +109,25 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             fontWeight: FontWeight.w400,
                             ),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                '${widget.userData['telefone']}',
-                                style: TextStyle(
-                                color: secondary.shade400,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
-                                onPressed: () {
-                                  _showEditDialog("Telefone", nomeController, widget.userData['telefone']!);
-                                }
-                              )
-                            ],
-                          ),                          
+                          const SizedBox(width: 3),
+                          Text(
+                            '${widget.userData['telefone']}',
+                            style: TextStyle(
+                            color: secondary.shade400,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 3),
+                          IconButton(
+                              icon: Icon(Icons.edit, color: primary.withOpacity(0.7),),
+                              onPressed: () {
+                                _showEditDialog("Telefone", nameController, widget.userData['telefone']!);
+                              }
+                          )
                         ],
                       ),
-                      Column(
+                      Row(
                         children: [
                           Text(
                             'Email: ',

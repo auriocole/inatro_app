@@ -17,43 +17,93 @@ class SignUpService {
       String phone = phoneController.text;
       String identity = identityController.text;
 
-      if (nome.isEmpty || email.isEmpty || password.isEmpty || phone.isEmpty || identity.isEmpty) {
-        Get.snackbar("Preencha todos os campos!", "");
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('usuario')
+          .where('identidade', isEqualTo: identity)
+          .get();
+      if (querySnapshot.docs.isEmpty) {
+        final FirebaseAuthentication auth = FirebaseAuthentication();
+        User? user = await auth.signUpWithEmailAndPassword(email, password);
+
+        String userId = user!.uid;
+        await FirebaseFirestore.instance.collection('usuario').doc(userId).set({
+          'nome': nome,
+          'email': email,
+          'telefone': phone,
+          'identidade': identity,
+        });
+        Get.snackbar(
+          "",
+          "",
+          titleText: Text(
+            "Seja bem-vindo! ${nome.split(" ")[0]}",
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Seja bem vindo(a).",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.check_box, color: Colors.white),
+          //backgroundColor: primary.shade400,
+        );
+        setLoading(false);
+        Get.offAll(() => const LoginPage());
+      } else {
+        Get.snackbar(
+          "",
+          "",
+          titleText: const Text(
+            "Identidade já existente!",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          messageText: const Text(
+            "Tente novamente.",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          icon: const Icon(Icons.error, color: Colors.white),
+          backgroundColor: Colors.red.shade400,
+        );
+        setLoading(false);
       }
-
-      if (!RegExp(r'^\d{12}[A-Z]$').hasMatch(identity) ){
-        Get.snackbar("Numero de BI inválido!", "");
-      }
-
-      if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(nome)) {
-        Get.snackbar("Nome inválido! Use apenas letras e espaços.", "");
-      }
-
-      if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
-        Get.snackbar("Email inválido!", "");
-      }
-
-      if (password.length < 6) {
-        Get.snackbar("A senha deve ter pelo menos 6 caracteres!", "");  
-      }
-
-      if (phone.length != 9){
-        Get.snackbar("Numero de telefone inválido!", "");
-      }
-
-      final FirebaseAuthentication auth = FirebaseAuthentication();
-      User? user = await auth.signUpWithEmailAndPassword(email, password);
-
-      String userId = user!.uid;
-      await FirebaseFirestore.instance.collection('usuario').doc(userId).set({
-        'nome': nome,
-        'email': email,
-        'telefone': phone,
-        'identidade': identity,
-      });
-      Get.snackbar("Bem-Vindo!","Usuário cadastrado com sucesso");
-      Get.offAll(() => const HomePage());
     } catch (e) {
+      Get.snackbar(
+        "",
+        "",
+        titleText: const Text(
+          "Erro de Registro",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        messageText: const Text(
+          "Algo deu errado! tente novamente.",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
+            color: Colors.white,
+          ),
+        ),
+        icon: const Icon(Icons.error, color: Colors.white),
+        backgroundColor: Colors.red.shade400,
+      );
       setLoading(false);
       print("Erro durante o cadastro: $e");     
     }

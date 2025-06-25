@@ -5,8 +5,8 @@ import 'package:inatro_app/app/services/UserData/UserData.dart';
 import 'package:inatro_app/app/views/colors/Colors.dart';
 import 'package:inatro_app/app/views/pages/LoginPage.dart';
 import 'package:inatro_app/app/views/widgets/landing/LandingPageWidget.dart';
-import 'package:inatro_app/app/views/widgets/payment/PaymentMethod.dart';
 import 'package:inatro_app/app/views/widgets/navbar/NavBar.dart';
+import 'package:inatro_app/app/views/widgets/query/QueryWidget.dart';
 import 'package:inatro_app/app/views/widgets/userData/ProfileWidget.dart';
 
 
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: primary,
         child: const Icon(Icons.search, color: Colors.white),
         onPressed: () {
-          PaymentMethod.showPaymentMethod(context);
+          Get.to(() => const Querywidget());
         }
       )
       : null,

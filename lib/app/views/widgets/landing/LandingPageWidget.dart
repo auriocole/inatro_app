@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:inatro_app/app/views/colors/Colors.dart';
 import 'package:inatro_app/app/views/widgets/landing/dialogs/QueryInfoDialog.dart';
+import 'package:http/http.dart' as http;
 
 class LandingPageWidget extends StatelessWidget {
   const LandingPageWidget({super.key});
@@ -136,7 +140,9 @@ class LandingPageWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _getToken();
+                    },
                     child: const Text(
                       'Ver Mais',
                       style: TextStyle(
@@ -175,5 +181,30 @@ class LandingPageWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _getToken() async {
+    try {
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      String? token = await messaging.getToken();
+    _sendTokenToServer(token!);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _sendTokenToServer(String token) async {
+    var url = Uri.parse('http://10.0.2.2:8080/firebase/api/sendToken');
+    var response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'token': token}),
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print("Falha ao enviar o token");
+    }
   }
 }

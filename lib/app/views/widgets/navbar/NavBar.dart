@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inatro_app/app/views/colors/Colors.dart';
-import 'package:inatro_app/app/views/widgets/payment/PaymentMethod.dart';
+import 'package:inatro_app/app/views/widgets/query/QueryWidget.dart';
 import 'package:inatro_app/app/views/widgets/userData/HistoricalWidget.dart';
 
 class NavBar extends StatefulWidget {
@@ -18,7 +19,7 @@ class _NavBarState extends State<NavBar> {
   void dispose() {
     super.dispose();
   }
-   
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -63,7 +64,8 @@ class _NavBarState extends State<NavBar> {
             onTap: () async{
               await Future.delayed(const Duration(milliseconds: 200));
               Get.back();
-              PaymentMethod.showPaymentMethod(context);
+              Get.to(() => const Querywidget());
+              //PaymentMethod.showPaymentMethod(context);
             },
           ),
           ListTile(

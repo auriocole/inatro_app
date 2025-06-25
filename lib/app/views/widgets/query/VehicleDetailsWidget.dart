@@ -4,9 +4,12 @@ import 'package:inatro_app/app/views/colors/Colors.dart';
 import 'package:inatro_app/app/views/pages/HomePage.dart';
 import 'package:inatro_app/app/views/widgets/payment/PaymentMethod.dart';
 
+import 'QueryWidget.dart';
+
 class VehicleDetailsWidget extends StatefulWidget {
   final Map<String, dynamic> vehicleData;
-  const VehicleDetailsWidget({super.key, required this.vehicleData});
+  final String plate;
+  const VehicleDetailsWidget({super.key, required this.vehicleData, required this.plate});
 
   @override
   State<VehicleDetailsWidget> createState() => _VehicleDetailsWidgetState();
@@ -234,7 +237,7 @@ class _VehicleDetailsWidgetState extends State<VehicleDetailsWidget> {
                           backgroundColor: WidgetStateProperty.all(primary),
                         ),
                         onPressed: (){
-                          PaymentMethod.showPaymentMethod(context);
+                          Get.to(() => const Querywidget());
                         },              
                         child: const Text(
                           "Consultar Novamente",
