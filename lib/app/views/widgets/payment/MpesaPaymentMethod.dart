@@ -34,6 +34,8 @@ class MpesaPaymentMethodWidget extends StatefulWidget {
 
 class _MpesaPaymentMethodWidgetState extends State<MpesaPaymentMethodWidget> {
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   TextEditingController phoneController = TextEditingController();
   bool _isLoading = false;
 
@@ -42,7 +44,6 @@ class _MpesaPaymentMethodWidgetState extends State<MpesaPaymentMethodWidget> {
     phoneController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +115,22 @@ class _MpesaPaymentMethodWidgetState extends State<MpesaPaymentMethodWidget> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FormContainerPaymentWidget(
-                            controller: phoneController,
-                            hintText: "84/85-xxx-xxxx",
-                            isPasswordField: false,
+                          Form(
+                            key: _formKey,
+                            child: FormContainerPaymentWidget(
+                              controller: phoneController,
+                              hintText: "84/85-xxx-xxxx",
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'O digite o número.';
+                                }
+                                if (!RegExp(r'^(84|85)\d{7}$').hasMatch(value)) {
+                                  return 'Formato inválido. Ex: 84/85-xxx-xxxx';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           const SizedBox(height: 5),
                           Container(
@@ -137,15 +150,8 @@ class _MpesaPaymentMethodWidgetState extends State<MpesaPaymentMethodWidget> {
                                 backgroundColor: WidgetStateProperty.all(primary),
                               ),
                               onPressed: () async {
-                                String phoneNumber = phoneController.text;
-                                if (phoneNumber.isEmpty) {
-                                  Get.snackbar("Preencha o campo", "");
-                                  throw "Preencha o campo";
-                                }
-                                else if (!RegExp(r'^(84|85)\d{7}$').hasMatch(phoneNumber)) {
-                                  Get.snackbar("Número inválido", "");
-                                  throw "Número inválido";
-                                } else {
+                                if (_formKey.currentState!.validate()) {
+                                  String phoneNumber = phoneController.text;
                                   makeQuery(widget.plate, phoneNumber);
                                 }
                               },

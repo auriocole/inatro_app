@@ -34,7 +34,7 @@ class PaymentMethodWidget extends StatelessWidget {
                 ),
               const SizedBox(height: 5),
               const Text(
-                "Pretendo pagar via:",
+                "Deseja pagar com:",
                 style: TextStyle(
                     color: secondary,
                     fontSize: 20,

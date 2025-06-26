@@ -31,6 +31,8 @@ class EmolaPaymentMethodWidget extends StatefulWidget {
 }
 
 class _EmolaPaymentMethodWidgetState extends State<EmolaPaymentMethodWidget> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   TextEditingController phoneController = TextEditingController();
   bool _isLoading = false;
 
@@ -110,10 +112,22 @@ class _EmolaPaymentMethodWidgetState extends State<EmolaPaymentMethodWidget> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FormContainerPaymentWidget(
-                            controller: phoneController,
-                            hintText: "86/87-xxx-xxxx",
-                            isPasswordField: false,
+                          Form(
+                            key: _formKey,
+                            child: FormContainerPaymentWidget(
+                              controller: phoneController,
+                              hintText: "86/87-xxx-xxxx",
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'O digite o número.';
+                                }
+                                if (!RegExp(r'^(86|87)\d{7}$').hasMatch(value)) {
+                                  return 'Formato inválido. Ex: 86/87-xxx-xxxx';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           const SizedBox(height: 5),
                           Container(
@@ -133,7 +147,10 @@ class _EmolaPaymentMethodWidgetState extends State<EmolaPaymentMethodWidget> {
                                 backgroundColor: WidgetStateProperty.all(primary),
                               ),
                               onPressed: () async {
-                                makeQuery(widget.plate);
+                                if (_formKey.currentState!.validate()) {
+                                  //String phoneNumber = phoneController.text;
+                                  //makeQuery(widget.plate, phoneNumber);
+                                }
                               },
                               child: const Text(
                                 "Pagar",
@@ -215,7 +232,7 @@ class _EmolaPaymentMethodWidgetState extends State<EmolaPaymentMethodWidget> {
     );
   }
 
-  Future <void> makeQuery(String plate) async {
+  Future <void> makeQuery(String plate, String phoneNumber) async {
     setState(() {
       _isLoading = true;
     });

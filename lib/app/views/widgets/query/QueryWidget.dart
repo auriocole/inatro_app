@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inatro_app/app/views/colors/Colors.dart';
-import 'package:inatro_app/app/views/pages/HomePage.dart';
 import 'package:inatro_app/app/views/widgets/form/FormContainerWidget.dart';
 import 'package:inatro_app/app/views/widgets/payment/PaymentMethod.dart';
 import 'package:inatro_app/app/views/widgets/query/VehicleDetailsWidget.dart';
@@ -17,6 +16,8 @@ class Querywidget extends StatefulWidget {
 }
 
 class _QuerywidgetState extends State<Querywidget> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController plateController = TextEditingController();
   bool _isLoading = false;
@@ -103,12 +104,24 @@ class _QuerywidgetState extends State<Querywidget> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 15,),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          child: FormContainerWidget(
-                            controller: plateController,
-                            hintText: "ABC-123-MC",
-                            isPasswordField: false,
+                        Form(
+                          key: _formKey,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            child: FormContainerWidget(
+                              controller: plateController,
+                              hintText: "ABC-123-MC",
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'O preencha o campo.';
+                                }
+                                if (!RegExp(r'^[AM][A-Z]{2}-\d{3}-[A-Z]{2}$').hasMatch(value)) {
+                                  return 'Formato inválido. Ex: ABC-123-MC';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12,),
@@ -129,15 +142,8 @@ class _QuerywidgetState extends State<Querywidget> {
                               backgroundColor: WidgetStateProperty.all(primary),
                             ),
                             onPressed: () {
-                              String plate = plateController.text;
-                              if (plate.isEmpty) {
-                                Get.snackbar("Preencha o campo", "");
-                                throw "Preencha o campo";
-                              }
-                              else if (!RegExp(r'^[AM][A-Z]{2}-\d{3}-[A-Z]{2}$').hasMatch(plate)) {
-                                Get.snackbar("Formato inválido", "");
-                                throw "Formato inválido";
-                              } else {
+                              if (_formKey.currentState!.validate()) {
+                                String plate = plateController.text;
                                 PaymentMethod.showPaymentMethod(context, plate);
                               }
                             },

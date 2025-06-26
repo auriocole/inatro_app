@@ -41,9 +41,6 @@ class FormContainerPaymentWidgetState extends State<FormContainerPaymentWidget> 
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.100),
-      ),
       child: TextFormField(
         style: const TextStyle(color: secondary),
         cursorColor: primary,
@@ -56,7 +53,27 @@ class FormContainerPaymentWidgetState extends State<FormContainerPaymentWidget> 
         onFieldSubmitted: widget.onFieldSubmitted,
         decoration: InputDecoration(
           border: InputBorder.none,
-          filled: true,
+          filled: true, // Ativa cor de fundo
+          fillColor: secondary.shade50,
+
+          // Estilos de borda
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.red, width: 1),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.red, width: 1),
+          ),
+
           hintText: widget.hintText,
           hintStyle: TextStyle(color: secondary.shade200),
           suffixIcon: GestureDetector(
