@@ -56,7 +56,12 @@ class LandingPageWidget extends StatelessWidget {
                   const SizedBox(height: 5),
                   TextButton(
                     onPressed: () {
-                      QueryInfoDialog.showQueryInfoDialog(context);
+                      QueryInfoDialog.showQueryInfoDialog(
+                        context,
+                        "Consultas Rápidas",
+                        "Consulte diversas matrículas de veículos dentro da plataforma do Inatro de forma simples e rápida. \n"
+                        "A cada nova consulta é cobrado uma taxa de 935,00 MTN."
+                      );
                     },
                     child: const Text(
                       'Ver Mais',
@@ -99,7 +104,13 @@ class LandingPageWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      QueryInfoDialog.showQueryInfoDialog(
+                          context,
+                          "Formas de Pagamento",
+                          "Escolha a melhor forma de pagamento para si. Pague de forma rápida em simples com as carteiras móveis mais usadas no país."
+                      );
+                    },
                     child: const Text(
                       'Ver Mais',
                       style: TextStyle(
@@ -141,7 +152,11 @@ class LandingPageWidget extends StatelessWidget {
                   const SizedBox(height: 5),
                   TextButton(
                     onPressed: () {
-                      _getToken();
+                      QueryInfoDialog.showQueryInfoDialog(
+                          context,
+                          "Acesso ao Histórico",
+                          ""
+                      );
                     },
                     child: const Text(
                       'Ver Mais',

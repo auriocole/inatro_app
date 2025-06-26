@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inatro_app/app/services/FirebaseAuthentication/FirebaseAuthentication.dart';
-import 'package:inatro_app/app/views/pages/HomePage.dart';
 import 'package:inatro_app/app/views/pages/LoginPage.dart';
 
 class SignUpService {
@@ -44,7 +43,7 @@ class SignUpService {
             ),
           ),
           messageText: const Text(
-            "Seja bem vindo(a).",
+            "Faça o login com sua credencias.",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 14,

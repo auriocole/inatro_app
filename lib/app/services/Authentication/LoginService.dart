@@ -23,12 +23,13 @@ class LoginService {
           email: querySnapshot.docs.first['email'],
           password: password,
         );
+        String name = querySnapshot.docs.first['nome'];
         Get.snackbar(
           "",
           "",
-          titleText: const Text(
-            "Credencias corretas!",
-            style: TextStyle(
+          titleText: Text(
+            "Olá! ${name.split(" ")[0]}",
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16,

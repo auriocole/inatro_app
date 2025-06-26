@@ -63,9 +63,45 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.white),
             onPressed: () async {
-              FirebaseAuth.instance.signOut();
-              await Future.delayed(const Duration(seconds: 1));
-              Get.offAll(() => const LoginPage());                  
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    title: const Text(
+                      "Deseja sair?",
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child:const Text(
+                          'Cancelar',
+                          style: TextStyle(
+                              color: primary
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          FirebaseAuth.instance.signOut();
+                          Get.offAll(() => const LoginPage());
+                        },
+                        child: const Text(
+                          'Sair',
+                          style: TextStyle(
+                              color: Colors.red
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           )
         ],
