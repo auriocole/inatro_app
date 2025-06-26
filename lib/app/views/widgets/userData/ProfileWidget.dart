@@ -28,7 +28,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           },
         ),
         title: const Text(
-          'Dados do Utilizador',
+          'Meu Perfil',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -45,7 +45,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 width: MediaQuery.of(context).size.width,
                 height: 200,
                 decoration: const BoxDecoration(
-                  color: primary
+                  color: primary,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  )
                 ),
                 child: Column(
                   children: <Widget> [

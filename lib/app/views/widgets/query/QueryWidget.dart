@@ -32,15 +32,20 @@ class _QuerywidgetState extends State<Querywidget> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Get.back();
+          },
+        ),
         backgroundColor: primary,
-        title: const Center(
-          child: Text(
-            'Consulta de Matrícula',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
+        title: const Text(
+          'Consulta de Matrícula',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
       ),
@@ -106,7 +111,7 @@ class _QuerywidgetState extends State<Querywidget> {
                             isPasswordField: false,
                           ),
                         ),
-                        const SizedBox(height: 10,),        
+                        const SizedBox(height: 12,),
                         Container(
                           width: double.infinity,
                           height: 45,
@@ -125,7 +130,6 @@ class _QuerywidgetState extends State<Querywidget> {
                             ),
                             onPressed: () {
                               String plate = plateController.text;
-
                               if (plate.isEmpty) {
                                 Get.snackbar("Preencha o campo", "");
                                 throw "Preencha o campo";
@@ -148,37 +152,7 @@ class _QuerywidgetState extends State<Querywidget> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10,),
-                        Container(
-                          width: double.infinity,
-                          height: 45,
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(1),
-                          ),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              shape: WidgetStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              backgroundColor: WidgetStateProperty.all(Colors.red.withOpacity(0.9)),
-                            ),
-                            onPressed: () {
-                              Get.offAll(() => const HomePage());
-                            },     
-                            child: const Text(
-                              "Cancelar",
-                              style: TextStyle(
-                                fontSize: 16, 
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(height: 12,),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 18),
                           child: RichText(
